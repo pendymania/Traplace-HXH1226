@@ -8,7 +8,7 @@
  * ========================================= */
 const CUSTOM_CONFIG = {
     allianceName: "HXH ALLIANCE",    // Custom Alliance Name
-    serverName: "Kingdom #1234",           // Custom Server Name
+    serverName: "Kingdom #1226",           // Custom Server Name
     welcomeMessage: "Strategic Map Tool by Nomad",  // Subtitle
     logoFileName: "logo.png"               // File in app/static/img/
 };
