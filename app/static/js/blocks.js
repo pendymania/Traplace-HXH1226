@@ -7,10 +7,10 @@
  * 🛠️ CUSTOM SERVER CONFIGURATION
  * ========================================= */
 const CUSTOM_CONFIG = {
-    allianceName: "HEROSXHUNTERS",       // Change this to your Alliance Name
-    serverName: "Kingdom #1226",           // Change this to your Server Name
-    welcomeMessage: "Map Tool for Leaders updated by Nomad",  // Subtitle
-    logoFileName: "logo.png"               // Place this file in app/static/img/
+    allianceName: "HXH ALLIANCE",    // Custom Alliance Name
+    serverName: "Kingdom #1234",           // Custom Server Name
+    welcomeMessage: "Strategic Map Tool by Nomad",  // Subtitle
+    logoFileName: "logo.png"               // File in app/static/img/
 };
 /* ========================================= */
 
@@ -185,13 +185,18 @@ function finishEditLabel(blockEl, cancel) {
   if (cancel) {
     label.textContent = b._labelOriginal ?? defaultLabel;
   } else {
-    const txt = (label.textContent || '').trim();
+    // ---------------------------------------------------------
+    // CUSTOM LOGIC: Replace spaces with underscores
+    // ---------------------------------------------------------
+    let txt = (label.textContent || '').trim().replace(/\s+/g, '_');
+    
     if (!txt) {
       label.textContent = defaultLabel;
       b.customLabel = false;
     } else if (txt === defaultLabel) {
       b.customLabel = false;
     } else {
+      label.textContent = txt; // Update visual label
       b.customLabel = true;
     }
   }
@@ -249,10 +254,14 @@ export function createBlock(kind, size, left, top, width, height, immutable = fa
     if (customName) {
       displayText = customName;
     } else {
+      // ---------------------------------------------------------
+      // CUSTOM LOGIC: Default Name Format
+      // ---------------------------------------------------------
       if (kind === 'city') {
         const cityCount = state.blocks.filter(b => b.kind === 'city').length + 1;
         const { cx, cy } = posToCell(left, top);
-        displayText = `Town ${cityCount} [${cx}, ${cy}]`;
+        // Format: Town_N_[x,y]_To_Be_Decided
+        displayText = `Town_${cityCount}_[${cx},${cy}]_To_Be_Decided`;
       } else {
         displayText = t(`palette.${kind}`) || `${size}×${size}`;
       }
