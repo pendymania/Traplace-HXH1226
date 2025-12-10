@@ -1,0 +1,390 @@
+<!-- File: app/templates/index.html -->
+<!doctype html>
+<html lang="ko">
+  <head>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-M2J65D6M');
+    </script>
+    <!-- End Google Tag Manager -->
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Kingshot Traplace</title>
+
+    <!-- Icons & Styles -->
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/grid.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/blocks.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/ui.css') }}" />
+  </head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-M2J65D6M"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Sidebar: palette only (footer removed by convention) -->
+    <aside id="sidebar" class="sidebar">
+      <!-- Hidden on mobile: usage block -->
+      <div class="usage-section" data-mobile-hidden>
+        <button id="usageToggle" class="usage-toggle" type="button" aria-expanded="false">
+          <h2 data-i18n="ui.usageTitle">사용 방법</h2>
+          <span class="toggle-icon" aria-hidden="true">▼</span>
+        </button>
+        <div id="usageContent" class="usage-content collapsed">
+          <div class="usage" data-i18n="ui.usage"></div>
+        </div>
+      </div>
+
+      <!-- Hidden on mobile: palette title -->
+      <div class="palette-title" data-i18n="ui.paletteTitle" data-mobile-hidden>객체 팔레트</div>
+
+      <!-- Palette -->
+      <div
+        id="palette"
+        class="palette palette--scroll"
+        role="listbox"
+        tabindex="0"
+        aria-label="Palette"
+      >
+        <div
+          class="palette-item"
+          data-kind="hq"
+          data-size="3"
+          role="button"
+          tabindex="0"
+          aria-label="평원본부"
+        >
+          <div class="pi-rot"></div>
+          <span class="pi-text">평원본부</span>
+        </div>
+
+        <div
+          class="palette-item"
+          data-kind="flag"
+          data-size="1"
+          role="button"
+          tabindex="0"
+          aria-label="연맹깃발"
+        >
+          <div class="pi-rot"></div>
+          <span class="pi-text">연맹깃발</span>
+        </div>
+
+        <div
+          class="palette-item"
+          data-kind="trap"
+          data-size="3"
+          role="button"
+          tabindex="0"
+          aria-label="사냥함정"
+        >
+          <div class="pi-rot"></div>
+          <span class="pi-text">사냥함정</span>
+        </div>
+
+        <div
+          class="palette-item"
+          data-kind="city"
+          data-size="2"
+          role="button"
+          tabindex="0"
+          aria-label="도시"
+        >
+          <div class="pi-rot"></div>
+          <span class="pi-text">도시</span>
+        </div>
+
+        <div
+          class="palette-item"
+          data-kind="resource"
+          data-size="2"
+          role="button"
+          tabindex="0"
+          aria-label="연맹자원"
+        >
+          <div class="pi-rot"></div>
+          <span class="pi-text">연맹자원</span>
+        </div>
+
+        <div
+          class="palette-item palette-item-custom"
+          data-kind="custom"
+          role="button"
+          tabindex="0"
+          aria-label="커스텀 블록"
+        >
+          <div class="pi-rot"></div>
+          <span class="pi-text">커스텀</span>
+          <div class="custom-inputs">
+            <input
+              type="number"
+              class="custom-width"
+              placeholder="X"
+              min="1"
+              max="30"
+              value="1"
+              aria-label="가로 크기"
+            />
+            <span class="custom-separator">×</span>
+            <input
+              type="number"
+              class="custom-height"
+              placeholder="Y"
+              min="1"
+              max="30"
+              value="1"
+              aria-label="세로 크기"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <!-- QR 코드 2개 -->
+        <div class="footer-qrs">
+          <div class="qr-item">
+            <a
+              class="qr-link"
+              href="https://www.buymeacoffee.com/swyun"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Buy me a coffee"
+            >
+              <img
+                class="qr-img"
+                src="{{ url_for('static', filename='img/qr-code-bmc.png') }}"
+                alt="Buy me a coffee QR"
+              />
+            </a>
+            <span class="qr-label">Buy me a coffee</span>
+          </div>
+
+          <div class="qr-item">
+            <a
+              class="qr-link"
+              href="supertoss://send?amount=0&bank=IBK%EA%B8%B0%EC%97%85%EC%9D%80%ED%96%89&accountNo=29810334201018&origin=qr"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="토스 송금"
+            >
+              <img
+                class="qr-img"
+                src="{{ url_for('static', filename='img/qr-code-toss.jpg') }}"
+                alt="Toss QR"
+              />
+            </a>
+            <span class="qr-label">Toss</span>
+          </div>
+        </div>
+
+        <!-- GitHub + 크레딧 -->
+        <div class="footer-info">
+          <a
+            class="github-link"
+            href="https://github.com/SangwoonYun/Traplace"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Traplace GitHub"
+          >
+            <img
+              class="github-icon"
+              src="{{ url_for('static', filename='img/github-mark.svg') }}"
+              alt="GitHub"
+            />
+          </a>
+          <span class="credit">Created by #159 [TCA] 방구석개발자</span>
+        </div>
+
+        <!-- Legal Links -->
+        <div class="footer-legal">
+          <a
+            href="{{ url_for('policies.privacy') }}?lang={{ current_lang or 'ko' }}"
+            class="legal-link"
+            data-i18n="ui.footer.privacy"
+            >Privacy Policy</a
+          >
+          <span class="legal-sep">•</span>
+          <a
+            href="{{ url_for('policies.terms') }}?lang={{ current_lang or 'ko' }}"
+            class="legal-link"
+            data-i18n="ui.footer.terms"
+            >Terms of Service</a
+          >
+        </div>
+      </div>
+    </aside>
+
+    <!-- Top toolbar -->
+    <header id="toolbar" class="toolbar" role="toolbar" aria-label="Editor toolbar">
+      <div class="tb-group">
+        <button
+          id="btnUndo"
+          class="tb-btn"
+          type="button"
+          title="되돌리기 (⌘Z / Ctrl+Z)"
+          aria-label="되돌리기"
+        >
+          ↶
+        </button>
+        <button
+          id="btnRedo"
+          class="tb-btn"
+          type="button"
+          title="다시하기 (⇧⌘Z 또는 Ctrl+Y)"
+          aria-label="다시하기"
+        >
+          ↷
+        </button>
+      </div>
+
+      <div class="tb-sep" aria-hidden="true"></div>
+
+      <div class="tb-group">
+        <button
+          id="btnCityTrapDist"
+          class="tb-btn"
+          type="button"
+          title="사냥함정과의 거리 예측 (⌥⌘D / Ctrl+Alt+D)"
+          aria-label="거리 예측"
+        >
+          📏
+        </button>
+        <button
+          id="btnReset"
+          class="tb-btn danger"
+          type="button"
+          title="초기화 (⌥⌘R / Ctrl+Alt+R)"
+          aria-label="초기화"
+        >
+          🧹
+        </button>
+        <button
+          id="btnCopyURL"
+          class="tb-btn"
+          type="button"
+          title="URL 복사 (⌥⌘C / Ctrl+Alt+C)"
+          aria-label="URL 복사"
+        >
+          🔗
+        </button>
+        <button
+          id="btnExportPNG"
+          class="tb-btn primary"
+          type="button"
+          title="PNG 내보내기 (⌥⌘E / Ctrl+Alt+E)"
+          aria-label="PNG 내보내기"
+        >
+          🖼
+        </button>
+      </div>
+
+      <div class="tb-flex-spacer" aria-hidden="true"></div>
+
+      <div class="tb-group">
+        <label class="lang-label" for="langSelect" data-i18n="ui.toolbar.lang">언어</label>
+        <select id="langSelect" class="lang-select" aria-label="Language">
+          <option value="en">🇺🇸 English</option>
+          <option value="ko">🇰🇷 한국어</option>
+          <option value="zh-CN">🇨🇳 简体中文</option>
+          <option value="zh-TW">🇹🇼 繁體中文</option>
+          <option value="ja">🇯🇵 日本語</option>
+          <option value="fr">🇫🇷 Français</option>
+          <option value="de">🇩🇪 Deutsch</option>
+          <option value="es">🇪🇸 Español</option>
+          <option value="it">🇮🇹 Italiano</option>
+          <option value="pl">🇵🇱 Polski</option>
+          <option value="pt">🇵🇹 Português</option>
+          <option value="tr">🇹🇷 Türkçe</option>
+          <!-- <option value="ar" data-rtl>🇸🇦 العربية</option> -->
+          <option value="th">🇹🇭 ไทย</option>
+          <option value="id">🇮🇩 Indonesia</option>
+        </select>
+      </div>
+    </header>
+
+    <!-- Viewport / World -->
+    <main id="viewport" class="viewport" aria-label="scrollable-viewport">
+      <div id="world" class="world">
+        <div id="rot" class="rot">
+          <div class="grid"></div>
+          <div id="tiles" class="tiles"></div>
+          <div id="tilesBarren" class="tiles-barren"></div>
+          <div id="tilesPlain" class="tiles-plain"></div>
+          <div id="tilesRich" class="tiles-rich"></div>
+          <div id="tilesRuins" class="tiles-ruins"></div>
+          <div id="tilesRedZone" class="tiles-redzone"></div>
+          <div id="tilesUser" class="tiles-user"></div>
+          <div id="tilesPreview" class="tiles-preview"></div>
+          <div id="outlines" class="outlines"></div>
+          <div id="outlinesPreview" class="outlines-preview"></div>
+          <div id="snap" class="snap-outline"></div>
+        </div>
+
+        <div id="badge" class="badge">
+          <button id="btnHome" class="home-btn" type="button" title="Home" aria-label="Home">
+            🏠
+          </button>
+          <button id="btnTrap" class="trap-btn" type="button" title="Find Trap" aria-label="Find Trap">
+            🐻
+          </button>
+          <span id="badgeCoord" class="badge-coord-text" title="Click to jump to coordinates">x:-, y:-</span>
+          <input id="badgeInput" class="badge-coord-input" type="text" style="display: none;" placeholder="x, y" />
+          <span id="badgeZoom" aria-live="polite">100%</span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Trash zone for delete via drag -->
+    <div
+      id="trashZone"
+      class="trash-zone"
+      data-i18n-title="ui.trash.title"
+      title="여기로 드래그하면 삭제"
+    >
+      <span class="trash-emoji" aria-hidden="true">🗑</span>
+      <span class="trash-label" data-i18n="ui.trash.label">여기로 드래그하면 삭제</span>
+    </div>
+
+    <!-- URL Copy Modal -->
+    <div id="urlModal" class="url-modal" style="display: none;">
+      <div class="url-modal-content">
+        <div class="url-modal-header">
+          <h3 data-i18n="modal.urlCopy.title">URL 복사</h3>
+          <button id="urlModalClose" class="url-modal-close" type="button" aria-label="닫기">&times;</button>
+        </div>
+        <div class="url-modal-body">
+          <p data-i18n="modal.urlCopy.message">클립보드 복사에 실패했습니다. 아래 URL을 수동으로 복사해주세요.</p>
+          <div class="url-display-container">
+            <input id="urlDisplayInput" class="url-display-input" type="text" readonly />
+          </div>
+        </div>
+        <div class="url-modal-footer">
+          <button id="urlModalCopy" class="url-modal-copy-btn" type="button" data-i18n="modal.urlCopy.copyBtn">복사</button>
+        </div>
+      </div>
+    </div>
+
+    <noscript>이 앱을 사용하려면 JavaScript를 활성화하세요.</noscript>
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>
