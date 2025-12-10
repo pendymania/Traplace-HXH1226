@@ -62,7 +62,7 @@ const BUILTIN_EN = {
       home: 'Go to center',
     },
     footer: {
-      credit: 'Created by #159 [TCA] 방구석개발자',
+      credit: 'Created by #159 [TCA] Developer',
       bmc: 'Buy me a coffee',
       toss: 'Toss',
     },
@@ -457,7 +457,7 @@ export function updateBlockLabelsForLocale(state) {
   };
 
   // Defaults we want to auto-replace on locale switch
-  const PREV_DEFAULTS = new Set(['도시', 'City']);
+  const PREV_DEFAULTS = new Set(['Town', 'City']);
 
   // Update turret labels specifically
   if (window.__turrets) {
@@ -490,7 +490,7 @@ export function updateBlockLabelsForLocale(state) {
       const labelEl = el?.querySelector?.('.label');
       if (labelEl) {
         const roman = fortressRomans[key];
-        labelEl.textContent = t('palette.fortress', `성채 ${roman}`);
+        labelEl.textContent = t('palette.fortress', `Fortress ${roman}`);
       }
     }
   }
@@ -516,7 +516,7 @@ export function updateBlockLabelsForLocale(state) {
       const labelEl = el?.querySelector?.('.label');
       if (labelEl) {
         const roman = sanctuaryRomans[key];
-        labelEl.textContent = t('palette.sanctuary', `유적 ${roman}`);
+        labelEl.textContent = t('palette.sanctuary', `Sanctuary ${roman}`);
       }
     }
   }

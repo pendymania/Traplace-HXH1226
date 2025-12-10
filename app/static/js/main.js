@@ -178,7 +178,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '성채 I',
+    'Fortress I',
   ); // 12 o'clock
   const fortress2 = createBlock(
     'fortress',
@@ -188,7 +188,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '성채 II',
+    'Fortress II',
   ); // 3 o'clock
   const fortress3 = createBlock(
     'fortress',
@@ -198,7 +198,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '성채 III',
+    'Fortress III',
   ); // 6 o'clock
   const fortress4 = createBlock(
     'fortress',
@@ -208,7 +208,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '성채 IV',
+    'Fortress IV',
   ); // 9 o'clock
 
   // Store fortress elements for i18n updates
@@ -223,7 +223,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '유적 I',
+    'Sanctuary I',
   );
   const sanctuary2 = createBlock(
     'sanctuary',
@@ -233,7 +233,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '유적 II',
+    'Sanctuary II',
   );
   const sanctuary3 = createBlock(
     'sanctuary',
@@ -243,7 +243,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '유적 III',
+    'Sanctuary III',
   );
   const sanctuary4 = createBlock(
     'sanctuary',
@@ -253,7 +253,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '유적 IV',
+    'Sanctuary IV',
   );
   const sanctuary5 = createBlock(
     'sanctuary',
@@ -263,7 +263,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '유적 V',
+    'Sanctuary V',
   );
   const sanctuary6 = createBlock(
     'sanctuary',
@@ -273,7 +273,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '유적 VI',
+    'Sanctuary VI',
   );
   const sanctuary7 = createBlock(
     'sanctuary',
@@ -283,7 +283,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '유적 VII',
+    'Sanctuary VII',
   );
   const sanctuary8 = createBlock(
     'sanctuary',
@@ -293,7 +293,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '유적 VIII',
+    'Sanctuary VIII',
   );
   const sanctuary9 = createBlock(
     'sanctuary',
@@ -303,7 +303,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '유적 IX',
+    'Sanctuary IX',
   );
   const sanctuary10 = createBlock(
     'sanctuary',
@@ -313,7 +313,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '유적 X',
+    'Sanctuary X',
   );
   const sanctuary11 = createBlock(
     'sanctuary',
@@ -323,7 +323,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '유적 XI',
+    'Sanctuary XI',
   );
   const sanctuary12 = createBlock(
     'sanctuary',
@@ -333,7 +333,7 @@ window.addEventListener('load', async () => {
     undefined,
     undefined,
     true,
-    '유적 XII',
+    'Sanctuary XII',
   );
 
   // Store sanctuary elements for i18n updates

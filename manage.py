@@ -15,7 +15,7 @@ def main() -> None:
     """Entry point for running the application."""
     host = os.getenv('HOST', '0.0.0.0')
     port = int(os.getenv('PORT', '5000'))
-    env = os.getenv('ENV', 'development')
+    env = os.getenv('ENV', 'prod')
 
     app = create_app(env)
     debug = app.config.get('DEBUG', False)

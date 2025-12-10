@@ -194,9 +194,9 @@ function showUrlModal(url) {
   copyBtn.onclick = async () => {
     try {
       await navigator.clipboard.writeText(url);
-      copyBtn.textContent = t('msg.copied') || '✓ 복사됨';
+      copyBtn.textContent = t('msg.copied') || '✓ Copied';
       setTimeout(() => {
-        copyBtn.textContent = t('modal.urlCopy.copyBtn') || '복사';
+        copyBtn.textContent = t('modal.urlCopy.copyBtn') || 'Copy';
         closeModal();
       }, 1000);
     } catch (err) {
@@ -204,7 +204,7 @@ function showUrlModal(url) {
       // Fallback: select all text
       input.select();
       input.setSelectionRange(0, 99999); // For mobile
-      alert(t('msg.copyManual') || 'Ctrl+C / Cmd+C로 복사해주세요');
+      alert(t('msg.copyManual') || 'Press Ctrl+C / Cmd+C to copy');
     }
   };
 

@@ -186,7 +186,7 @@ export function serializeState() {
         const label = (labelEl?.textContent || '').trim();
 
         // Treat both Korean and English defaults as non-custom
-        if (label && label !== '도시' && label !== 'City') {
+        if (label && label !== 'Town' && label !== 'City') {
           token += `~${encodeURIComponent(label)}`;
         }
       } else if (b.kind === 'custom') {
