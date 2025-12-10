@@ -7,10 +7,10 @@
  * 🛠️ CUSTOM SERVER CONFIGURATION
  * ========================================= */
 const CUSTOM_CONFIG = {
-    allianceName: "HXH ALLIANCE",    // Custom Alliance Name
-    serverName: "Kingdom #1226",           // Custom Server Name
-    welcomeMessage: "Strategic Map Tool by Nomad",  // Subtitle
-    logoFileName: "logo.png"               // File in app/static/img/
+    allianceName: "HerosXHunters",          // Custom Alliance Name
+    serverName: "Kingdom #1226",            // Custom Server Name
+    welcomeMessage: "Strategic Map Tool by Nomad", // Subtitle
+    logoFileName: "logo.png"                // File in app/static/img/
 };
 /* ========================================= */
 
@@ -185,10 +185,8 @@ function finishEditLabel(blockEl, cancel) {
   if (cancel) {
     label.textContent = b._labelOriginal ?? defaultLabel;
   } else {
-    // ---------------------------------------------------------
-    // CUSTOM LOGIC: Replace spaces with underscores
-    // ---------------------------------------------------------
-    let txt = (label.textContent || '').trim().replace(/\s+/g, '_');
+    // Standard trim (Removed underscore enforcement to allow spaces in "T1 [x,y] tbc")
+    let txt = (label.textContent || '').trim();
     
     if (!txt) {
       label.textContent = defaultLabel;
@@ -196,7 +194,7 @@ function finishEditLabel(blockEl, cancel) {
     } else if (txt === defaultLabel) {
       b.customLabel = false;
     } else {
-      label.textContent = txt; // Update visual label
+      label.textContent = txt;
       b.customLabel = true;
     }
   }
@@ -260,8 +258,8 @@ export function createBlock(kind, size, left, top, width, height, immutable = fa
       if (kind === 'city') {
         const cityCount = state.blocks.filter(b => b.kind === 'city').length + 1;
         const { cx, cy } = posToCell(left, top);
-        // Format: Town_N_[x,y]_To_Be_Decided
-        displayText = `Town_${cityCount}_[${cx},${cy}]_To_Be_Decided`;
+        // Format: T1 [x,y] tbc
+        displayText = `T${cityCount} [${cx},${cy}] tbc`;
       } else {
         displayText = t(`palette.${kind}`) || `${size}×${size}`;
       }
@@ -527,7 +525,7 @@ setTimeout(() => {
 
     // Scan for the specific footer container
     for (const div of allDivs) {
-        if (div.innerText.includes("Created by") && (div.innerText.includes("Toss") || div.innerText.includes("Buy me"))) {
+        if (div.innerText.includes("Created by") && (div.innerText.includes("Toss") || div.innerText.includes("Buy me") || div.innerText.includes("Original Engine"))) {
             footerDiv = div;
             break;
         }

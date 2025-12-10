@@ -1,0 +1,34 @@
+{
+  "app": { "title": "Alliance Placement Simulator" },
+  "ui": {
+    "usageTitle": "How to use",
+    "usage": "• <b>Drag & drop</b>: Place items from the palette.<br>• <b>Right-Click Town</b>: Change color (🔴🟢🟡🟣).<br>• <b>Double-Click</b>: Rename Town, HQ, Trap, or Resource.<br>• <b>Middle Mouse</b>: Pan view.<br>• <b>Ctrl + Wheel</b>: Zoom.<br>• <b>Save/Open</b>: Use buttons below to save full project (.json).<br>• <b>CSV Tools</b>: Export coordinates to Excel.",
+    "list": "List",
+    "share": "Share",
+    "reset": "Reset",
+    "lang": "Language",
+    "theme": "Theme"
+  },
+  "palette": {
+    "hq": "Alliance HQ",
+    "flag": "Banner",
+    "trap": "Hunting Trap",
+    "city": "Town",
+    "resource": "Alliance Resource",
+    "castle": "Fortress",
+    "turret": "Turret",
+    "fortress": "Stronghold",
+    "sanctuary": "Sanctuary"
+  },
+  "msg": {
+    "copied": "✓ Copied",
+    "copyManual": "Press Ctrl+C to copy"
+  },
+  "modal": {
+    "urlCopy": {
+      "title": "Share URL",
+      "desc": "Copy this link to share the current layout.",
+      "copyBtn": "Copy"
+    }
+  }
+}
