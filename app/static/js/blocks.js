@@ -125,6 +125,16 @@ export function validateAllObjects() {
 }
 
 /* ---------------------------------------------
+ * Helper: Generate Dynamic Label
+ * ------------------------------------------- */
+function generateCityLabel(b) {
+    const id = b.townId || '?'; 
+    const { cx, cy } = posToCell(b.left, b.top);
+    // [x..., y...] format based on swapped coordinates
+    return `T${id} [x${cy}, y${cx}] tbc`;
+}
+
+/* ---------------------------------------------
  * Label Editing
  * ------------------------------------------- */
 function startEditLabel(blockEl) {
@@ -176,16 +186,17 @@ function finishEditLabel(blockEl, cancel) {
   if (!b || !label) return;
 
   let defaultLabel = '';
-  if (b.kind === 'custom') {
-    defaultLabel = `${b.width || b.size}×${b.height || b.size}`;
+  if (b.kind === 'city') {
+      defaultLabel = generateCityLabel(b);
+  } else if (b.kind === 'custom') {
+      defaultLabel = `${b.width || b.size}×${b.height || b.size}`;
   } else {
-    defaultLabel = t(`palette.${b.kind}`);
+      defaultLabel = t(`palette.${b.kind}`);
   }
 
   if (cancel) {
     label.textContent = b._labelOriginal ?? defaultLabel;
   } else {
-    // Standard trim (Removed underscore enforcement to allow spaces in "T1 [x,y] tbc")
     let txt = (label.textContent || '').trim();
     
     if (!txt) {
@@ -240,6 +251,9 @@ export function createBlock(kind, size, left, top, width, height, immutable = fa
   if (immutable) el.dataset.immutable = 'true';
 
   let blockWidth, blockHeight, displayText;
+  let townId = null; 
+
+  // 1. Determine Dimensions & Default Text
   if (kind === 'custom' && width && height) {
     blockWidth = width;
     blockHeight = height;
@@ -248,22 +262,24 @@ export function createBlock(kind, size, left, top, width, height, immutable = fa
   } else {
     blockWidth = blockHeight = size;
     el.dataset.size = String(size);
+    displayText = t(`palette.${kind}`) || `${size}×${size}`;
+  }
 
-    if (customName) {
-      displayText = customName;
-    } else {
-      // ---------------------------------------------------------
-      // CUSTOM LOGIC: Default Name Format
-      // ---------------------------------------------------------
-      if (kind === 'city') {
-        const cityCount = state.blocks.filter(b => b.kind === 'city').length + 1;
-        const { cx, cy } = posToCell(left, top);
-        // Format: T1 [x,y] tbc
-        displayText = `T${cityCount} [${cx},${cy}] tbc`;
+  // 2. Custom Logic Overrides (City)
+  if (kind === 'city') {
+      if (restoreData && restoreData.townId) {
+          townId = restoreData.townId;
       } else {
-        displayText = t(`palette.${kind}`) || `${size}×${size}`;
+          townId = state.blocks.filter(b => b.kind === 'city').length + 1;
       }
-    }
+      const { cx, cy } = posToCell(left, top);
+      // Format: T1 [x500, y400] tbc
+      displayText = `T${townId} [x${cy}, y${cx}] tbc`;
+  }
+
+  // 3. Custom Name Override
+  if (customName) {
+      displayText = customName;
   }
 
   el.style.width = `${blockWidth * cell}px`;
@@ -296,11 +312,16 @@ export function createBlock(kind, size, left, top, width, height, immutable = fa
     left, top, customLabel: false,
   };
 
-  // Restore Extra Data
+  if (townId) b.townId = townId;
+  
   if (restoreData) {
       if (restoreData.customColorIndex) b.customColorIndex = restoreData.customColorIndex;
       if (restoreData.customLabel) b.customLabel = restoreData.customLabel;
+      if (restoreData.townId) b.townId = restoreData.townId;
   }
+  
+  // FIX: Ensure custom label state persists
+  if (customName) b.customLabel = true;
 
   if (kind === 'custom') { b.width = blockWidth; b.height = blockHeight; }
   if (immutable) { b.immutable = true; }
@@ -325,6 +346,15 @@ export function updateBlockPosition(el, snappedLeft, snappedTop) {
   const b = state.blocks.find((x) => x.el === el);
   if (b) {
     b.left = snappedLeft; b.top = snappedTop;
+    
+    // Update label on move if it's a City using default naming
+    if (b.kind === 'city' && !b.customLabel) {
+        const labelEl = el.querySelector('.label');
+        if (labelEl) {
+            labelEl.textContent = generateCityLabel(b);
+        }
+    }
+
     if (!state._restoring) {
       recomputePaint(); validateAllObjects(); queueSaveToURL(); saveCheckpoint();
     }
@@ -388,7 +418,8 @@ function saveProject() {
                 height: b.height,
                 customName: labelEl ? labelEl.textContent : null,
                 customLabel: b.customLabel,
-                customColorIndex: b.customColorIndex
+                customColorIndex: b.customColorIndex,
+                townId: b.townId 
             };
         });
     const jsonStr = JSON.stringify(data, null, 2);
@@ -426,7 +457,8 @@ function loadProject(file) {
                     item.customName,
                     { 
                         customColorIndex: item.customColorIndex,
-                        customLabel: item.customLabel 
+                        customLabel: item.customLabel,
+                        townId: item.townId
                     }
                 );
             });
@@ -449,7 +481,7 @@ function loadProject(file) {
  * 📥 CSV IMPORT / EXPORT
  * ------------------------------------------- */
 function downloadCSV() {
-    const rows = [['Kind', 'Name', 'GridX', 'GridY', 'PixelLeft', 'PixelTop', 'Size', 'ColorIndex']];
+    const rows = [['Kind', 'Name', 'GridX', 'GridY', 'PixelLeft', 'PixelTop', 'Size', 'ColorIndex', 'TownID']];
     state.blocks.forEach(b => {
       if (b.immutable) return; 
       const { cx, cy } = posToCell(b.left, b.top);
@@ -457,7 +489,7 @@ function downloadCSV() {
       const labelEl = b.el.querySelector('.label');
       if (labelEl) name = labelEl.textContent.trim();
       if (name.includes(',') || name.includes('"')) name = `"${name.replace(/"/g, '""')}"`;
-      rows.push([b.kind, name, cx, cy, b.left, b.top, b.size, b.customColorIndex || 0]);
+      rows.push([b.kind, name, cx, cy, b.left, b.top, b.size, b.customColorIndex || 0, b.townId || '']);
     });
     const csvContent = "data:text/csv;charset=utf-8," + rows.map(e => e.join(",")).join("\n");
     const encodedUri = encodeURI(csvContent);
@@ -503,10 +535,11 @@ function importCSV(csvText) {
             const top = parseFloat(cols[5]);
             const size = parseFloat(cols[6]);
             const colorIdx = parseInt(cols[7]) || 0;
+            const tId = parseInt(cols[8]) || null;
             if (isNaN(left) || isNaN(top)) continue;
             let w, h;
             if (kind === 'custom') { w = size; h = size; }
-            createBlock(kind, size, left, top, w, h, false, name, { customColorIndex: colorIdx });
+            createBlock(kind, size, left, top, w, h, false, name, { customColorIndex: colorIdx, townId: tId });
         }
     } finally {
         state._restoring = false;
@@ -519,11 +552,22 @@ function importCSV(csvText) {
  * 🛠️ UI CUSTOMIZATION & CLEANUP
  * ------------------------------------------- */
 setTimeout(() => {
-    // 1. Find the sidebar footer container (where "Created by" lives)
+    // 1. Hide Specific Language Selectors (Safe Mode)
+    document.querySelectorAll('select').forEach(el => {
+        if (el.innerHTML.includes('English') || el.innerHTML.includes('한국어')) {
+            el.style.display = 'none';
+        }
+    });
+    document.querySelectorAll('div, span, label').forEach(el => {
+        if (el.innerText.trim() === 'Language' || el.innerText.trim() === '언어' || el.innerText.trim() === 'Theme') {
+            el.style.display = 'none';
+        }
+    });
+
+    // 2. Replace Footer Content
     const allDivs = document.querySelectorAll('div');
     let footerDiv = null;
 
-    // Scan for the specific footer container
     for (const div of allDivs) {
         if (div.innerText.includes("Created by") && (div.innerText.includes("Toss") || div.innerText.includes("Buy me") || div.innerText.includes("Original Engine"))) {
             footerDiv = div;
@@ -531,18 +575,14 @@ setTimeout(() => {
         }
     }
 
-    // 2. Replace Footer Content
     if (footerDiv) {
-        footerDiv.innerHTML = ''; // Wipe old content
-        
-        // Apply styling
+        footerDiv.innerHTML = ''; 
         Object.assign(footerDiv.style, {
             textAlign: 'center', padding: '15px 10px',
             borderTop: '1px solid #444', marginTop: '20px',
             color: '#ccc', fontSize: '0.9rem', lineHeight: '1.4'
         });
 
-        // Inject new custom HTML
         footerDiv.innerHTML = `
             <div style="margin-bottom: 12px;">
                 <h3 style="color: #fff; margin: 0 0 5px 0; font-size: 1.1rem;">${CUSTOM_CONFIG.allianceName}</h3>

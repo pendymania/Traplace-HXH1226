@@ -7,7 +7,15 @@
     "share": "Share",
     "reset": "Reset",
     "lang": "Language",
-    "theme": "Theme"
+    "theme": "Theme",
+    "paletteTitle": "Object Palette",
+    "trash": {
+        "label": "Drag here to delete"
+    },
+    "toolbar": {
+        "lang": "Language",
+        "theme": "Theme"
+    }
   },
   "palette": {
     "hq": "Alliance HQ",
